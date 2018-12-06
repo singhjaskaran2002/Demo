@@ -35,13 +35,12 @@ app.post('/addUser', function(req, res){
 	})
 });
 
-app.post('/deleteUser', function(req, res){
-	res.writeHeader(200, {'Content-type':'application/json'});
+app.delete('/deleteUser/:id', function(req, res){
 	// res.write(JSON.stringify({id:req.body.id}));
 	// res.end();
 		fs.readFile(__dirname + '/' + "users.json", function(err, data){
 		var data = JSON.parse(data);
-		// var j = parseInt(req.body.id);
+		var j = parseInt(req.params.id);
 		var index = data.users.findIndex(function(item, i){
   			return item.id === j;
 		});
@@ -51,9 +50,13 @@ app.post('/deleteUser', function(req, res){
 		fs.writeFile(__dirname + '/' + "users.json", JSON.stringify(data), function(err){
 			if(err) {
 				console.log(err.stack());
+				res.writeHeader(204, {'Content-type':'application/json'});
+				res.write(JSON.stringify({status:'false', message:'record not deleted'}));
+				res.end();
 			}
 			else{
-				res.json({status:true, data:[], message:"deleted"});
+				res.writeHeader(200, {'Content-type':'application/json'});
+				res.write(JSON.stringify({status:'false', message:'record not deleted'}));
 				res.end();
 			}
 		});
