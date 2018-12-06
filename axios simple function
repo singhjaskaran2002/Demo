@@ -1,0 +1,15 @@
+call to get data from API
+--------------------------
+axios
+  .get('https://api.coindesk.com/v1/bpi/currentprice.json')
+  .then(response => (this.info = response.data.bpi))
+
+
+if any exception occurs then how to handle
+--------------------------------------------
+axios
+  .get('https://api.coindesk.com/v1/bpi/currentprice.json')
+  .then(response => (this.info = response.data.bpi))
+  .catch(error => console.log(error))
+
+
